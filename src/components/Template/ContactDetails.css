@@ -1,0 +1,39 @@
+/* ContactDetails.css */
+
+.contact-details {
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 20px;
+}
+
+.contact-details h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-list li {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.contact-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.contact-list a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.contact-list a:hover {
+  text-decoration: underline;
+}

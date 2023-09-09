@@ -1,0 +1,51 @@
+/* ProjectsTechnologies.css */
+
+.projects-technologies {
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 20px;
+}
+
+.projects-technologies h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.project-list {
+  list-style: none;
+  padding: 0;
+}
+
+.project-item {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.project-item h3 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.project-item p {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.technologies {
+  margin-top: 10px;
+}
+
+.technology-list {
+  list-style: none;
+  padding: 0;
+}
+
+.technology-list li {
+  font-size: 14px;
+  margin: 5px 0;
+}
