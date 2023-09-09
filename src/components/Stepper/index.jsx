@@ -25,6 +25,12 @@ import { styled } from '@mui/material/styles';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import { ContextProvider } from "../Context";
+import App from "../Template/App";
+import { renderToString } from "react-dom/server";
+import { downloadHtml } from "../Template/download";
+import AboutSection from "../Template/AboutSection";
+import "../Template/AboutSection.css";
+import { AboutCss } from "../Template/Combine";
 import 'pure-react-carousel/dist/react-carousel.es.css';
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -178,7 +184,36 @@ export default function HorizontalLinearStepper() {
   const handleReset = () => {
     setActiveStep(0);
   };
+  const handleDownload = () => {
+    // Create a Blob from the CSS file
+    // const cssContent = AboutCss; // Replace with your CSS content
+    console.log("AboutCss: ", AboutCss);
+    const blob = new Blob([AboutCss], { type: "text/css" });
 
+    // Create an object URL for the Blob
+    // let zip = new JSZip();
+    // zip
+    // console.log("Zip ", zip);
+    const url = window.URL.createObjectURL(blob);
+    console.log("CSS Url ", url);
+    // Create an anchor element and trigger the download
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "styles.css"; // Set the desired filename
+    document.body.appendChild(a);
+    a.click();
+
+    // Clean up the object URL
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  };
+  const handleFinish = () => {
+    console.log("Handled click")
+    // const htmlContent = ReactDOMServer.renderToStaticMarkup(App);
+    console.log(renderToString(<App />));
+    // console.log(htmlContent);
+    downloadHtml(renderToString(<App />), "component.html");
+  };
   return (
     <>
       {
@@ -333,8 +368,8 @@ export default function HorizontalLinearStepper() {
               )} */}
               {
                 activeStep === steps.length - 1 ? (
-                  <Button onClick={handleFinish} sx={{ mr: 1, color: '#479ac2', background: 'white', boxShadow: '10px 10px 10px gray', fontWeight: '700' }}>
-                    Finish
+                  <Button onClick={() => { handleFinish(); handleDownload(); }} sx={{ mr: 1, color: '#479ac2', background: 'white', boxShadow: '10px 10px 10px gray', fontWeight: '700' }}>
+                    Download Portfolio
                   </Button>
                 ) : (
                   <Button onClick={handleNext} sx={{ mr: 1, color: '#479ac2', background: 'white', boxShadow: '10px 10px 10px gray', fontWeight: '700' }}>
@@ -346,7 +381,7 @@ export default function HorizontalLinearStepper() {
             </Box>
           </React.Fragment>
         )}
-      </Box>
+      </Box >
     </>
   );
 }

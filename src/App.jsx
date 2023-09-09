@@ -5,11 +5,11 @@ import { ContextProvider } from './components/Context'
 function App() {
   return (
     <>
-     <ContextProvider>
+     {/* <ContextProvider> */}
     {/* <div> */ }
     < CustomizedSteppers />
     {/* </div> */ }
-    F </ContextProvider>
+    {/* F </ContextProvider> */}
     </>
   )
 }

@@ -25,6 +25,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
+import App from "../Template/App";
+import { renderToString } from "react-dom/server";
+import { downloadHtml } from "../Template/download";
+import AboutSection from "../Template/AboutSection";
+import "../Template/AboutSection.css";
+import { AboutCss } from "../Template/Combine";
 const blue = {
     100: '#DAECFF',
     200: '#b6daff',
@@ -107,6 +113,7 @@ function getStyles(name, skills, theme) {
             skills.indexOf(name) === -1
                 ? theme.typography.fontWeightRegular
                 : theme.typography.fontWeightMedium,
+
     };
 }
 export default function Forms() {
@@ -203,11 +210,41 @@ export default function Forms() {
         console.log("About Value ", value);
         setAbout(value);
     }
+    const handleDownload = () => {
+        // Create a Blob from the CSS file
+        // const cssContent = AboutCss; // Replace with your CSS content
+        console.log("AboutCss: ", AboutCss);
+        const blob = new Blob([AboutCss], { type: "text/css" });
+    
+        // Create an object URL for the Blob
+        // let zip = new JSZip();
+        // zip
+        // console.log("Zip ", zip);
+        const url = window.URL.createObjectURL(blob);
+        console.log("CSS Url ", url);
+        // Create an anchor element and trigger the download
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "styles.css"; // Set the desired filename
+        document.body.appendChild(a);
+        a.click();
+    
+        // Clean up the object URL
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      };
+      const handleFinish = () => {
+        console.log("Handled click")
+        // const htmlContent = ReactDOMServer.renderToStaticMarkup(App);
+        console.log(renderToString(<App />));
+        // console.log(htmlContent);
+        downloadHtml(renderToString(<App />), "component.html");
+      };
     return (
         <div>
             <Grid container spacing={2}>
                 <Grid item xs={12} style={{ marginBottom: '20px' }}>
-                    <Grid container spacing={1} style={{ background: 'linear-gradient(6deg, white, transparent)', border: '2px solid #fff', maxWidth: '100%', borderRadius: '10px' }}>
+                    <Grid container spacing={1} style={{ background: 'linear-gradient(6deg, gray, transparent)', border: '2px solid #fff', maxWidth: '100%', borderRadius: '10px' }}>
                         <Grid item xs={12} sm={4} md={4}>
                             <TextField id="name" value={name} label="Name" variant="outlined" onChange={(e) => setName(e.value)} style={{ float: 'left' }} />
                         </Grid>
@@ -232,13 +269,13 @@ export default function Forms() {
                     </Grid>
                 </Grid>
 
-                <Grid item xs={12} md={12} sm={12} style={{ background: 'linear-gradient(6deg, gray, transparent)', border: '2px solid #fff', paddingBottom: '10px', maxWidth: '98%', marginLeft: '10px', borderRadius: '10px' }}>
+                <Grid item xs={12} md={12} sm={12} style={{ background: 'linear-gradient(6deg, gray, transparent)', border: '2px solid #fff', paddingBottom: '10px', maxWidth: '98.7%', marginLeft: '10px', borderRadius: '10px',marginBottom: '20px'  }}>
                     <Box>
-                        <Typography variant="h4" style={{color: '#fff',fontWeight: '800'}}>
+                        <Typography variant="h4" style={{ color: '#fff', fontWeight: '800' }}>
                             Add Work Experience
                         </Typography>
-                        {/* <p style={{ float: "left", display: "flex", flexWrap: 'wrap', flexDirection: 'row', color: '#fff', fontWeight: '800', fontSize: '32px' }}>Add Work Experience</p> */}
-                        <Button onClick={handleAddItemWE} style={{ float: 'right', backgroundColor: '#4079ac2' }}><AddIcon /></Button>
+                        {/* <p style={{ float: "centre", display: "flex", flexWrap: 'wrap', flexDirection: 'row', color: '#fff', fontWeight: '800', fontSize: '32px' }}>Add Work Experience</p> */}
+                        <Button onClick={handleAddItemWE} style={{ float: 'centre', backgroundColor: 'transparent' }}><AddIcon /></Button>
                     </Box>
                     <br />
 
@@ -252,9 +289,9 @@ export default function Forms() {
                                     <Grid container spacing={2}>
                                         <Grid item sm={12} md={12} xs={12}>
                                             <Box>
-                                            <Typography variant="h7" style={{color: '#fff',fontWeight: '800'}}>
-                            Work Experience {i+1}
-                        </Typography>
+                                                <Typography variant="h7" style={{ color: '#fff', fontWeight: '800' }}>
+                                                    Work Experience {i + 1}
+                                                </Typography>
                                                 {/* <p style={{ float: "left", display: "flex", flexWrap: 'wrap', flexDirection: 'row' }}>Work Experience</p> */}
                                                 <Button name={`but_${m1.ProfileName}`} onClick={() => handleRemoveItemWE(m1.ProfileName)} style={{ float: 'right', backgroundColor: '#4079ac2' }}><RemoveIcon /></Button>
                                             </Box>
@@ -290,11 +327,16 @@ export default function Forms() {
                                 )
                             }
                         </>}
+                        
                 </Grid>
-                <Grid item xs={12} md={12} sm={12}>
+                
+                <Grid item xs={12} md={12} sm={12} style={{ background: 'linear-gradient(6deg, gray, transparent)', border: '2px solid #fff', paddingBottom: '10px', maxWidth: '98.7%', marginLeft: '10px', borderRadius: '10px' }}>
                     <Box>
-                        <p style={{ float: "left", display: "flex", flexWrap: 'wrap', flexDirection: 'row' }}>Add Projects</p>
-                        <Button onClick={handleAddItemP} style={{ float: 'right', backgroundColor: '#4079ac2' }}><AddIcon /></Button>
+                        <Typography variant="h4" style={{ color: '#fff', fontWeight: '800' }}>
+                            Add Projects
+                        </Typography>
+                        {/* <p style={{ float: "left", display: "flex", flexWrap: 'wrap', flexDirection: 'row' }}>Add Projects</p> */}
+                        <Button onClick={handleAddItemP} style={{ float: 'centre', backgroundColor: '#4079ac2' }}><AddIcon /></Button>
                     </Box>
                     <br />
                     {
@@ -303,7 +345,10 @@ export default function Forms() {
                             <Grid container spacing={2}>
                                 <Grid item sm={12} md={12} xs={12}>
                                     <Box>
-                                        <p style={{ float: "left", display: "flex", flexWrap: 'wrap', flexDirection: 'row' }}>Project {i + 1}</p>
+                                    <Typography variant="h7" style={{ color: '#fff', fontWeight: '800' }}>
+                                                    Project {i + 1}
+                                                </Typography>
+                                        {/* <p style={{ float: "left", display: "flex", flexWrap: 'wrap', flexDirection: 'row' }}>Project {i + 1}</p> */}
                                         <Button name={`but_${m1.ProjectName}`} onClick={() => handleRemoveItemP(m1.ProjectName)} style={{ float: 'right', backgroundColor: '#4079ac2' }}><RemoveIcon /></Button>
                                     </Box>
                                 </Grid>
@@ -342,7 +387,7 @@ export default function Forms() {
                     }
                 </Grid>
                 <Grid item sm={12} md={12} xs={12}>
-                    <FormControl sx={{ m: 1, width: 300, float: 'left' }}>
+                    <FormControl sx={{  width: '100%', float: 'left',marginBottom:'10px',borderRadius:'10px',color:'white' }}>
                         <InputLabel id="demo-multiple-chip-label">Skills</InputLabel>
                         <Select
                             labelId="demo-multiple-chip-label"
@@ -354,7 +399,7 @@ export default function Forms() {
                             renderValue={(selected) => (
                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        <Chip key={value} label={value} sx={{ color: '#fff' }} />
                                     ))}
                                 </Box>
                             )}
@@ -372,19 +417,23 @@ export default function Forms() {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item xs={12} md={12} sm={12}>
+                <Grid item xs={12} md={12} sm={12} style={{ background: 'linear-gradient(6deg, gray, transparent)', border: '2px solid #fff', paddingBottom: '10px', maxWidth: '98.7%', marginLeft: '10px', borderRadius: '10px' }}>
                     <Box>
-                        <p style={{ float: "left", display: "flex", flexWrap: 'wrap', flexDirection: 'row' }}>Add Certifications</p>
-                        <Button onClick={handleAddItemC} style={{ float: 'right', backgroundColor: '#4079ac2' }}><AddIcon /></Button>
+                    <Typography variant="h4" style={{ color: '#fff', fontWeight: '800' }}>
+                            Add Certifications
+                        </Typography>
+                        <Button onClick={handleAddItemC} style={{ float: 'centre', backgroundColor: '#4079ac2' }}><AddIcon /></Button>
                     </Box>
                     <br />
                     {
-                        projects.map((m1, i) =>
+                        certifications.map((m1, i) =>
                         (
                             <Grid container spacing={2}>
                                 <Grid item sm={12} md={12} xs={12}>
                                     <Box>
-                                        <p style={{ float: "left", display: "flex", flexWrap: 'wrap', flexDirection: 'row' }}>Certificate {i + 1}</p>
+                                    <Typography variant="h7" style={{ color: '#fff', fontWeight: '800' }}>
+                                                    Certificate {i + 1}
+                                                </Typography>
                                         <Button name={`but_${m1.ProjectName}`} onClick={() => handleRemoveItemC(m1.CertificationName)} style={{ float: 'right', backgroundColor: '#4079ac2' }}><RemoveIcon /></Button>
                                     </Box>
                                 </Grid>
@@ -421,6 +470,9 @@ export default function Forms() {
                         )
                         )
                     }
+                    {/* <Button onClick={() => { handleFinish(); handleDownload(); }} sx={{ mr: 1, color: '#479ac2', background: 'white', boxShadow: '10px 10px 10px gray', fontWeight: '700' }}>
+                    Download Portfolio
+                  </Button> */}
                 </Grid>
             </Grid>
         </div>

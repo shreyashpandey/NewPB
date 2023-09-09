@@ -12,8 +12,8 @@ export const ContextProvider = ({ children }) => {
     const [projects, setProjects] = useState([]);
     const [skills, setSkills] = useState([]);
     const [certifications, setCertifications] = useState([])
-    // console.log("Children: " + children)
-    console.log("About ",about);
+    console.log("Children: " + children)
+    // console.log("About ",about);
     return (
         <Context.Provider value={{ template, setTemplate, name, setName, email, setEmail, phone, setPhone, about, setAbout, address, setAddress, workExperience, setWorkExperience, projects, setProjects, skills, setSkills, certifications, setCertifications }}>
             {children}

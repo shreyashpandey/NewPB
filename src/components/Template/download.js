@@ -4,8 +4,8 @@ export function downloadHtml(htmlContent, fileName) {
   const a = document.createElement("a");
   a.href = url;
   a.download = fileName;
-  document.body.appendChild(a);
+  document.getElementById("root").appendChild(a);
   a.click();
-  document.body.removeChild(a);
+  document.getElementById("root").removeChild(a);
   URL.revokeObjectURL(url);
 }

@@ -4,17 +4,20 @@ import React from 'react';
 import { useContext } from 'react';
 import './AboutSection.css'; // Import your CSS file
 import { Context } from '../Context';
+import { ContextProvider } from '../Context';
 const AboutSection = () => {
-  // const ctx=useContext(Context);
-  // console.log("Context ",ctx);
-  const {about}= useContext(Context);
-  console.log("Context in about section ", about);
+  const ctx= useContext(Context);
+  console.log("Context in about section ", ctx);
+  if(ctx)
+  {
+    localStorage.setItem('about',ctx.about);
+  }
   return (
     <div className="about-section">
       <div className="about-content">
         <h2>About Us</h2>
         <p>
-          {about}
+          {ctx?ctx.about:localStorage.getItem('about')}
         </p>
       </div>
       <div className="about-image">

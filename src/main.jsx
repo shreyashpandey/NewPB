@@ -5,10 +5,10 @@ import './index.css'
 import { ContextProvider } from './components/Context'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <div>
+    {/* <div> */}
     <ContextProvider>
       <App />
     </ContextProvider>
-    </div>
+    {/* </div> */}
   </React.StrictMode>,
 )
