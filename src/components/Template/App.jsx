@@ -17,12 +17,12 @@ export default function App() {
         <link rel="stylesheet" href="styles.css" />
       </head>
 
-      {/* <div className={"style"}> */}
+      <div className={"style"}>
           <AboutSection />
-          {/* <Projects />
+          <Projects />
           <CertificationGained />
-          <ContactDetails /> */}
-      {/* </div> */}
+          <ContactDetails />
+      </div>
     </>
   );
 }

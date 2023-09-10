@@ -1,6 +1,6 @@
 import React from "react";
 import "./Projects.css";
-import {useContext} from "react";
+import { useContext } from "react";
 import { Context } from "../Context";
 // const projectsData = [
 //   {
@@ -17,12 +17,15 @@ import { Context } from "../Context";
 // ];
 
 function Projects() {
-  const {projects}=useContext(Context);
+  const ctx = useContext(Context);
+  if (ctx)
+    localStorage.setItem("projects", JSON.stringify(ctx.projects))
+
   return (
     <div className="projects-container">
       <h1>My Projects</h1>
       <ul className="project-list">
-        {projects.map((project, index) => (
+        {ctx ? ctx.projects : JSON.parse(localStorage.getItem(projects)).map((project, index) => (
           <li key={index} className="project-item">
             <h2 className="project-title">{project.ProjectName}</h2>
             <p className="project-description">{project.Description}</p>

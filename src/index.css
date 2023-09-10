@@ -29,7 +29,7 @@ body {
   place-items: center;
   min-width: 100%;
   min-height: 100vh;
-  background-color:#6809ee78;
+  /* background-color:#6809ee78; */
   background-position:'fixed';
   background-size:cover;
   background-repeat:'no-repeat';
@@ -44,9 +44,9 @@ h1 {
   line-height: 1.1;
 }
 input{
-  color:black ;
+  color:white !important;
   background:transparent !important;
-  border:2px solid white !important;
+  border:2px solid transparent !important;
   border-radius: 10px;
 }
 input:focus
@@ -57,6 +57,17 @@ input:focus
 label{
   color:white !important;
   border: white !important;
+}
+textarea{
+  border-color: rgba(0,0,0,0.07) !important;
+  background: transparent !important;
+  color:white !important ;
+}
+::placeholder{
+  color:white
+}
+span{
+  color: #fff !important;
 }
 button {
   border-radius: 8px;
@@ -71,7 +82,10 @@ button {
 }
 button:hover {
   border-color: #646cff;
-  color:#fff
+  /* color:#fff */
+}
+.stepButton:hover{
+  color: white;
 }
 button:focus,
 button:focus-visible {
@@ -97,7 +111,7 @@ button:focus-visible {
   place-items: center;
   min-width: 110%;
   /* min-height: 100vh; */
-  background-color:#6809ee78;
+  /* background-color:#6809ee78; */
   background-position:'fixed';
   background-size:cover;
   background-repeat:'no-repeat';

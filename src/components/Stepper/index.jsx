@@ -164,22 +164,29 @@ export default function HorizontalLinearStepper() {
       return newSkipped;
     });
   };
-  const selectedTemplate = (e) => {
+  const selectedTemplate = (e, id) => {
+    console.log("Id ", id)
     console.log("Template selected", e);
-    const { target: { id } } = e;
-    let cards = cardStyle;
-    let toggles = toggleCard;
-    toggles[id] = !toggles[id];
-    if (toggleCard[id]) {
-      cards[id] = { border: "5px solid #83cae1" };
-      setTemplate(id);
+    if (template != id && template != "") {
+      setError("You can't select more than one template")
     }
     else {
-      cards[id] = { border: "0px solid black" };
-      setTemplate("");
+      // const { target: { id } } = e;
+      setError("");
+      let cards = cardStyle;
+      let toggles = toggleCard;
+      toggles[id] = !toggles[id];
+      if (toggleCard[id]) {
+        cards[id] = { border: "5px solid #83cae1" };
+        setTemplate(id);
+      }
+      else {
+        cards[id] = { border: "0px solid black" };
+        setTemplate("");
+      }
+      setToggleCard(toggles)
+      setCardStyle(cards);
     }
-    setToggleCard(toggles)
-    setCardStyle(cards);
   }
   const handleReset = () => {
     setActiveStep(0);
@@ -228,16 +235,11 @@ export default function HorizontalLinearStepper() {
           {steps.map((label, index) => {
             const stepProps = {};
             const labelProps = {};
-            if (isStepOptional(index)) {
-              labelProps.optional = (
-                <Typography variant="caption">Optional</Typography>
-              );
-            }
             if (isStepSkipped(index)) {
               stepProps.completed = false;
             }
             return (
-              <Step key={label} {...stepProps}>
+              <Step key={label} {...stepProps} >
                 <StepLabel StepIconComponent={ColorlibStepIcon} {...labelProps}>{label}</StepLabel>
               </Step>
             );
@@ -261,14 +263,14 @@ export default function HorizontalLinearStepper() {
                   <Typography sx={{ mt: 2, mb: 1, color: "#fff" }}>Templates</Typography>
                   <Grid container spacing={4}>
                     <Grid item xs={12} sm={4} md={4}>
-                      <Card id={"template1"} onClick={selectedTemplate} sx={{ minWidth: "230px", minHeight: '250px', boxShadow: "0px 2px 1px -1px rgba(0,170,90,11.9), 0px 1px 1px 0px rgba(0,0,0,0.14), 10px 1px 3px 10px rgba(0,0,0,0.12)" }} style={cardStyle.template1}>
+                      <Card id={"template1"} onClick={(e) => selectedTemplate(e, "template1")} sx={{ minWidth: "230px", minHeight: '250px', boxShadow: "0px 2px 1px -1px rgba(0,170,90,11.9), 0px 1px 1px 0px rgba(0,0,0,0.14), 10px 1px 3px 10px rgba(0,0,0,0.12)", zIndex: 9999 }} style={cardStyle.template1}>
                         <CardContent >
                           <div>
                             <Typography gutterBottom variant="h5" component="div">
                               Template1
                             </Typography>
 
-                            {/* <CarouselProvider
+                            <CarouselProvider
 
                               naturalSlideWidth={100}
                               naturalSlideHeight={100}
@@ -281,13 +283,13 @@ export default function HorizontalLinearStepper() {
                               </Slider>
                               <ButtonBack>Back</ButtonBack>
                               <ButtonNext>Next</ButtonNext>
-                            </CarouselProvider> */}
+                            </CarouselProvider>
                           </div>
                         </CardContent>
                       </Card>
                     </Grid>
                     <Grid item xs={12} sm={4} md={4}>
-                      <Card id={"template2"} sx={{ minWidth: "230px", minHeight: '250px', boxShadow: "0px 2px 1px -1px rgba(0,170,90,11.9), 0px 1px 1px 0px rgba(0,0,0,0.14), 10px 1px 3px 10px rgba(0,0,0,0.12)" }} onClick={selectedTemplate} style={cardStyle.template2}>
+                      <Card id={"template2"} sx={{ minWidth: "230px", minHeight: '250px', boxShadow: "0px 2px 1px -1px rgba(0,170,90,11.9), 0px 1px 1px 0px rgba(0,0,0,0.14), 10px 1px 3px 10px rgba(0,0,0,0.12)" }} onClick={(e) => selectedTemplate(e, "template2")} style={cardStyle.template2}>
                         <CardContent>
                           <CarouselProvider
                             naturalSlideWidth={100}
@@ -309,7 +311,7 @@ export default function HorizontalLinearStepper() {
                       </Card>
                     </Grid>
                     <Grid item xs={12} sm={4} md={4}>
-                      <Card id={"template3"} sx={{ minWidth: "230px", minHeight: '250px', boxShadow: "0px 2px 1px -1px rgba(0,170,90,11.9), 0px 1px 1px 0px rgba(0,0,0,0.14), 10px 1px 3px 10px rgba(0,0,0,0.12)" }} onClick={selectedTemplate} style={cardStyle.template3}>
+                      <Card id={"template3"} sx={{ minWidth: "230px", minHeight: '250px', boxShadow: "0px 2px 1px -1px rgba(0,170,90,11.9), 0px 1px 1px 0px rgba(0,0,0,0.14), 10px 1px 3px 10px rgba(0,0,0,0.12)" }} onClick={(e) => selectedTemplate(e, "template3")} style={cardStyle.template3}>
                         <CardContent>
                           <CarouselProvider
                             naturalSlideWidth={100}
@@ -338,15 +340,17 @@ export default function HorizontalLinearStepper() {
             {
               activeStep == 1 ? (
                 <>
-                  <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+                  <br />
+                  {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
                   <Forms />
                 </>) : (<></>)
             }
             {
               activeStep == 2 ? (
                 <>
+                  <br />
                   {/* <ContextProvider> */}
-                  <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+                  {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
                   <Template />
                   {/* </ContextProvider> */}
                 </>) : (<></>)
@@ -356,6 +360,7 @@ export default function HorizontalLinearStepper() {
                 color="inherit"
                 disabled={activeStep === 0}
                 onClick={handleBack}
+                className='stepButton'
                 sx={{ mr: 1, color: 'black', background: 'white', boxShadow: '10px 10px 10px gray', fontWeight: '700' }}
               >
                 Back
@@ -368,11 +373,11 @@ export default function HorizontalLinearStepper() {
               )} */}
               {
                 activeStep === steps.length - 1 ? (
-                  <Button onClick={() => { handleFinish(); handleDownload(); }} sx={{ mr: 1, color: '#479ac2', background: 'white', boxShadow: '10px 10px 10px gray', fontWeight: '700' }}>
+                  <Button className='stepButton' onClick={() => { handleFinish(); handleDownload(); }} sx={{ mr: 1, color: '#479ac2', background: 'white', boxShadow: '10px 10px 10px gray', fontWeight: '700' }}>
                     Download Portfolio
                   </Button>
                 ) : (
-                  <Button onClick={handleNext} sx={{ mr: 1, color: '#479ac2', background: 'white', boxShadow: '10px 10px 10px gray', fontWeight: '700' }}>
+                  <Button className='stepButton' onClick={handleNext} sx={{ mr: 1, color: '#479ac2', background: 'white', boxShadow: '10px 10px 10px gray', fontWeight: '700' }}>
                     Next
                   </Button>
                 )

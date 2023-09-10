@@ -215,7 +215,7 @@ export default function Forms() {
         // const cssContent = AboutCss; // Replace with your CSS content
         console.log("AboutCss: ", AboutCss);
         const blob = new Blob([AboutCss], { type: "text/css" });
-    
+
         // Create an object URL for the Blob
         // let zip = new JSZip();
         // zip
@@ -228,31 +228,31 @@ export default function Forms() {
         a.download = "styles.css"; // Set the desired filename
         document.body.appendChild(a);
         a.click();
-    
+
         // Clean up the object URL
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
-      };
-      const handleFinish = () => {
+    };
+    const handleFinish = () => {
         console.log("Handled click")
         // const htmlContent = ReactDOMServer.renderToStaticMarkup(App);
         console.log(renderToString(<App />));
         // console.log(htmlContent);
         downloadHtml(renderToString(<App />), "component.html");
-      };
+    };
     return (
         <div>
             <Grid container spacing={2}>
                 <Grid item xs={12} style={{ marginBottom: '20px' }}>
                     <Grid container spacing={1} style={{ background: 'linear-gradient(6deg, gray, transparent)', border: '2px solid #fff', maxWidth: '100%', borderRadius: '10px' }}>
                         <Grid item xs={12} sm={4} md={4}>
-                            <TextField id="name" value={name} label="Name" variant="outlined" onChange={(e) => setName(e.value)} style={{ float: 'left' }} />
+                            <TextField id="name" label="Name" variant="outlined" onChange={(e) => setName(e.value)} style={{ float: 'left' }} dfaultValue={""} />
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
-                            <TextField id="email" value={email} label="Email" variant="outlined" onChange={(e) => setEmail(e.value)} style={{ float: 'left' }} />
+                            <TextField id="email" label="Email" variant="outlined" onChange={(e) => setEmail(e.value)} style={{ float: 'left' }} />
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
-                            <TextField id="phone" value={phone} label="Phone" variant="outlined" onChange={(e) => setPhone(e.value)} style={{ float: 'left' }} />
+                            <TextField id="phone" label="Phone" variant="outlined" onChange={(e) => setPhone(e.value)} style={{ float: 'left' }} />
                         </Grid>
                         <Grid item sm={12} md={12} xs={12}>
                             <StyledTextarea
@@ -269,7 +269,7 @@ export default function Forms() {
                     </Grid>
                 </Grid>
 
-                <Grid item xs={12} md={12} sm={12} style={{ background: 'linear-gradient(6deg, gray, transparent)', border: '2px solid #fff', paddingBottom: '10px', maxWidth: '98.7%', marginLeft: '10px', borderRadius: '10px',marginBottom: '20px'  }}>
+                <Grid item xs={12} md={12} sm={12} style={{ background: 'linear-gradient(6deg, gray, transparent)', border: '2px solid #fff', paddingBottom: '10px', maxWidth: '98.7%', marginLeft: '10px', borderRadius: '10px', marginBottom: '20px' }}>
                     <Box>
                         <Typography variant="h4" style={{ color: '#fff', fontWeight: '800' }}>
                             Add Work Experience
@@ -302,12 +302,12 @@ export default function Forms() {
 
                                         <Grid item sm={4} md={4} xs={12} style={{ maxWidth: "350", float: 'left', display: 'flex' }}>
                                             <LocalizationProvider dateAdapter={AdapterDayjs} style={{ float: 'left', display: 'flex', flexWrap: 'wrap', alignItems: "left", alignContent: 'left' }}>
-                                                <DatePicker name={`From_${i + 1}`} label="From" value={`${m1.From}`} style={{ float: 'left', display: 'flex', flexWrap: 'wrap', alignItems: "left" }} />
+                                                <DatePicker name={`From_${i + 1}`} label="From" onChange={(e) => handleItemChangeWE(e, i)} value={`${m1.From}`} style={{ float: 'left', display: 'flex', flexWrap: 'wrap', alignItems: "left" }} />
                                             </LocalizationProvider>
                                         </Grid>
                                         <Grid item sm={4} md={4} xs={12} style={{ maxWidth: "350", float: 'left', display: 'flex' }}>
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                <DatePicker name={`To_${i + 1}`} label="To" value={`${m1.To}`} />
+                                                <DatePicker name={`To_${i + 1}`} label="To" value={`${m1.To}`} onChange={(e) => handleItemChangeWE(e, i)} />
                                             </LocalizationProvider>
                                         </Grid>
                                         <Grid item sm={12} md={12} xs={12}>
@@ -319,7 +319,7 @@ export default function Forms() {
                                                 onChange={
                                                     (e) => handleItemChangeWE(e, i)
                                                 }
-                                                style={{ height: '100px', minHeight: '100px', display: 'flex', flexWrap: 'wrap', width: '97%', marginRight: '50px' }}
+                                                style={{ height: '100px', minHeight: '100px', display: 'flex', direction: 'row', width: '87%', marginRight: '100px', marginBottom: "15px", maxWidth: '87%' }}
                                             />
                                         </Grid>
                                     </Grid>
@@ -327,9 +327,9 @@ export default function Forms() {
                                 )
                             }
                         </>}
-                        
+
                 </Grid>
-                
+
                 <Grid item xs={12} md={12} sm={12} style={{ background: 'linear-gradient(6deg, gray, transparent)', border: '2px solid #fff', paddingBottom: '10px', maxWidth: '98.7%', marginLeft: '10px', borderRadius: '10px' }}>
                     <Box>
                         <Typography variant="h4" style={{ color: '#fff', fontWeight: '800' }}>
@@ -345,9 +345,9 @@ export default function Forms() {
                             <Grid container spacing={2}>
                                 <Grid item sm={12} md={12} xs={12}>
                                     <Box>
-                                    <Typography variant="h7" style={{ color: '#fff', fontWeight: '800' }}>
-                                                    Project {i + 1}
-                                                </Typography>
+                                        <Typography variant="h7" style={{ color: '#fff', fontWeight: '800' }}>
+                                            Project {i + 1}
+                                        </Typography>
                                         {/* <p style={{ float: "left", display: "flex", flexWrap: 'wrap', flexDirection: 'row' }}>Project {i + 1}</p> */}
                                         <Button name={`but_${m1.ProjectName}`} onClick={() => handleRemoveItemP(m1.ProjectName)} style={{ float: 'right', backgroundColor: '#4079ac2' }}><RemoveIcon /></Button>
                                     </Box>
@@ -369,7 +369,7 @@ export default function Forms() {
                                         <DatePicker name={`To_P_${i + 1}`} label="To" value={`${m1.To}`} />
                                     </LocalizationProvider>
                                 </Grid> */}
-                                <Grid item sm={8} md={8} xs={12}>
+                                <Grid item sm={12} md={12} xs={12}>
                                     <StyledTextarea
                                         maxRows={4}
                                         aria-label="Description"
@@ -378,7 +378,7 @@ export default function Forms() {
                                         onChange={
                                             (e) => handleItemChangeP(e, i)
                                         }
-                                        style={{ height: '100px', minHeight: '100px', display: 'flex', flexWrap: 'wrap', width: '97%', marginRight: '50px' }}
+                                        style={{ height: '100px', minHeight: '100px', display: 'flex', direction: 'row', width: '87%', marginRight: '100px', marginBottom: "15px", maxWidth: '87%' }}
                                     />
                                 </Grid>
                             </Grid>
@@ -387,7 +387,7 @@ export default function Forms() {
                     }
                 </Grid>
                 <Grid item sm={12} md={12} xs={12}>
-                    <FormControl sx={{  width: '100%', float: 'left',marginBottom:'10px',borderRadius:'10px',color:'white' }}>
+                    <FormControl sx={{ width: '100%', float: 'left', marginBottom: '10px', borderRadius: '10px', color: 'white' }}>
                         <InputLabel id="demo-multiple-chip-label">Skills</InputLabel>
                         <Select
                             labelId="demo-multiple-chip-label"
@@ -419,7 +419,7 @@ export default function Forms() {
                 </Grid>
                 <Grid item xs={12} md={12} sm={12} style={{ background: 'linear-gradient(6deg, gray, transparent)', border: '2px solid #fff', paddingBottom: '10px', maxWidth: '98.7%', marginLeft: '10px', borderRadius: '10px' }}>
                     <Box>
-                    <Typography variant="h4" style={{ color: '#fff', fontWeight: '800' }}>
+                        <Typography variant="h4" style={{ color: '#fff', fontWeight: '800' }}>
                             Add Certifications
                         </Typography>
                         <Button onClick={handleAddItemC} style={{ float: 'centre', backgroundColor: '#4079ac2' }}><AddIcon /></Button>
@@ -431,9 +431,9 @@ export default function Forms() {
                             <Grid container spacing={2}>
                                 <Grid item sm={12} md={12} xs={12}>
                                     <Box>
-                                    <Typography variant="h7" style={{ color: '#fff', fontWeight: '800' }}>
-                                                    Certificate {i + 1}
-                                                </Typography>
+                                        <Typography variant="h7" style={{ color: '#fff', fontWeight: '800' }}>
+                                            Certificate {i + 1}
+                                        </Typography>
                                         <Button name={`but_${m1.ProjectName}`} onClick={() => handleRemoveItemC(m1.CertificationName)} style={{ float: 'right', backgroundColor: '#4079ac2' }}><RemoveIcon /></Button>
                                     </Box>
                                 </Grid>
@@ -454,7 +454,7 @@ export default function Forms() {
                                         <DatePicker name={`To_P_${i + 1}`} label="To" value={`${m1.To}`} />
                                     </LocalizationProvider>
                                 </Grid> */}
-                                <Grid item sm={8} md={8} xs={12}>
+                                <Grid item sm={12} md={12} xs={12}>
                                     <StyledTextarea
                                         maxRows={4}
                                         aria-label="Description"
@@ -463,7 +463,7 @@ export default function Forms() {
                                         onChange={
                                             (e) => handleItemChangeC(e, i)
                                         }
-                                        style={{ height: '100px', minHeight: '100px', display: 'flex', flexWrap: 'wrap', width: '97%', marginRight: '50px' }}
+                                        style={{ height: '100px', minHeight: '100px', display: 'flex', direction: 'row', width: '87%', marginRight: '100px', marginBottom: "15px", maxWidth: '87%' }}
                                     />
                                 </Grid>
                             </Grid>
