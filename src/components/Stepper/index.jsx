@@ -32,6 +32,15 @@ import AboutSection from "../Template/AboutSection";
 import "../Template/AboutSection.css";
 import { AboutCss } from "../Template/Combine";
 import 'pure-react-carousel/dist/react-carousel.es.css';
+import template11 from "../../assets/templat1-1.png"
+import template12 from "../../assets/template1-2.png"
+import template13 from "../../assets/template1-3.png"
+import template21 from "../../assets/template2-1.png"
+import template22 from "../../assets/template2-2.png"
+import template23 from "../../assets/template2-3.png"
+import template31 from "../../assets/template3-1.png"
+import template32 from "../../assets/template3-2.png"
+import template33 from "../../assets/template3-3.png"
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
     top: 22,
@@ -277,9 +286,9 @@ export default function HorizontalLinearStepper() {
                               totalSlides={3}
                             >
                               <Slider>
-                                <Slide index={0}>I am the first Slide.</Slide>
-                                <Slide index={1}>I am the second Slide.</Slide>
-                                <Slide index={2}>I am the third Slide.</Slide>
+                                <Slide index={0}><img src={template11} style={{ width: '200px', height: '150px' }} /></Slide>
+                                <Slide index={1}><img src={template12} style={{ width: '200px', height: '150px' }} /></Slide>
+                                <Slide index={2}><img src={template13} style={{ width: '200px', height: '150px' }} /></Slide>
                               </Slider>
                               <ButtonBack>Back</ButtonBack>
                               <ButtonNext>Next</ButtonNext>
@@ -291,44 +300,46 @@ export default function HorizontalLinearStepper() {
                     <Grid item xs={12} sm={4} md={4}>
                       <Card id={"template2"} sx={{ minWidth: "230px", minHeight: '250px', boxShadow: "0px 2px 1px -1px rgba(0,170,90,11.9), 0px 1px 1px 0px rgba(0,0,0,0.14), 10px 1px 3px 10px rgba(0,0,0,0.12)" }} onClick={(e) => selectedTemplate(e, "template2")} style={cardStyle.template2}>
                         <CardContent>
+
+                          <Typography gutterBottom variant="h5" component="div">
+                            Template2
+                          </Typography>
                           <CarouselProvider
                             naturalSlideWidth={100}
                             naturalSlideHeight={100}
                             totalSlides={3}
                           >
                             <Slider>
-                              <Slide index={0}>I am the first Slide.</Slide>
-                              <Slide index={1}>I am the second Slide.</Slide>
-                              <Slide index={2}>I am the third Slide.</Slide>
+                              <Slide index={0}><img src={template21} style={{ width: '200px', height: '150px' }} /></Slide>
+                              <Slide index={1}><img src={template22} style={{ width: '200px', height: '150px' }} /></Slide>
+                              <Slide index={2}><img src={template23} style={{ width: '200px', height: '150px' }} /></Slide>
                             </Slider>
                             <ButtonBack>Back</ButtonBack>
                             <ButtonNext>Next</ButtonNext>
                           </CarouselProvider>
-                          <Typography gutterBottom variant="h5" component="div">
-                            Template2
-                          </Typography>
                         </CardContent>
                       </Card>
                     </Grid>
                     <Grid item xs={12} sm={4} md={4}>
                       <Card id={"template3"} sx={{ minWidth: "230px", minHeight: '250px', boxShadow: "0px 2px 1px -1px rgba(0,170,90,11.9), 0px 1px 1px 0px rgba(0,0,0,0.14), 10px 1px 3px 10px rgba(0,0,0,0.12)" }} onClick={(e) => selectedTemplate(e, "template3")} style={cardStyle.template3}>
                         <CardContent>
+
+                          <Typography gutterBottom variant="h5" component="div">
+                            Template3
+                          </Typography>
                           <CarouselProvider
                             naturalSlideWidth={100}
                             naturalSlideHeight={100}
                             totalSlides={3}
                           >
                             <Slider>
-                              <Slide index={0}>I am the first Slide.</Slide>
-                              <Slide index={1}>I am the second Slide.</Slide>
-                              <Slide index={2}>I am the third Slide.</Slide>
+                              <Slide index={0}><img src={template31} style={{ width: '200px', height: '150px' }} /></Slide>
+                              <Slide index={1}><img src={template32} style={{ width: '200px', height: '150px' }} /></Slide>
+                              <Slide index={2}><img src={template33} style={{ width: '200px', height: '150px' }} /></Slide>
                             </Slider>
                             <ButtonBack>Back</ButtonBack>
                             <ButtonNext>Next</ButtonNext>
                           </CarouselProvider>
-                          <Typography gutterBottom variant="h5" component="div">
-                            Template3
-                          </Typography>
                         </CardContent>
                       </Card>
                     </Grid>
