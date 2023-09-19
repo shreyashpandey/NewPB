@@ -11,7 +11,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Forms from "../Forms"
-import Template from "../Template";
+import Template from "../Template/Template1";
+import Modal from '@mui/material/Modal';
 import { Context } from '../Context';
 import { useContext, useState } from 'react';
 import Alert from '@mui/material/Alert';
@@ -25,7 +26,7 @@ import { styled } from '@mui/material/styles';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import { ContextProvider } from "../Context";
-import App from "../Template/App";
+import App from "../Template/Template1/Template1";
 import { renderToString } from "react-dom/server";
 import { downloadHtml } from "../Template/download";
 import AboutSection from "../Template/AboutSection";
@@ -41,6 +42,7 @@ import template23 from "../../assets/template2-3.png"
 import template31 from "../../assets/template3-1.png"
 import template32 from "../../assets/template3-2.png"
 import template33 from "../../assets/template3-3.png"
+import FileSaver from "file-saver"
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
     top: 22,
@@ -201,33 +203,75 @@ export default function HorizontalLinearStepper() {
     setActiveStep(0);
   };
   const handleDownload = () => {
-    // Create a Blob from the CSS file
-    // const cssContent = AboutCss; // Replace with your CSS content
-    console.log("AboutCss: ", AboutCss);
-    const blob = new Blob([AboutCss], { type: "text/css" });
+    // console.log("AboutCss: ", AboutCss);
+    // const blob = new Blob([AboutCss], { type: "text/css" });
+    // const url = window.URL.createObjectURL(blob);
+    // console.log("CSS Url ", url);
+    // const a = document.createElement("a");// Create an anchor element and trigger the download
+    // a.href = url;
+    // a.download = "styles.css"; // Set the desired filename
+    // document.body.appendChild(a);
+    // a.click();
+    // window.URL.revokeObjectURL(url);
+    // document.body.removeChild(a);
 
-    // Create an object URL for the Blob
-    // let zip = new JSZip();
-    // zip
-    // console.log("Zip ", zip);
-    const url = window.URL.createObjectURL(blob);
-    console.log("CSS Url ", url);
-    // Create an anchor element and trigger the download
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "styles.css"; // Set the desired filename
-    document.body.appendChild(a);
-    a.click();
+    const links = document.querySelectorAll('link');
+    console.log("Links ", links)
+    // Iterate over the list and download each CSS file.
+    for (let link of links) {
+      let run = async () => {
+        console.log("Download Link ", link);
+        if (link.rel === 'stylesheet') {
+          // Fetch the CSS file and save it to the local directory.
+          const response = await fetch(link.href);
+          const cssText = await response.text();
+          const filename = link.href.split('/').pop();
+          const blob = new Blob([cssText], { type: 'text/css' });
+          console.log("Blob ", blob)
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+      };
+      run();
+    }
 
-    // Clean up the object URL
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
   };
   const handleFinish = () => {
     console.log("Handled click")
     // const htmlContent = ReactDOMServer.renderToStaticMarkup(App);
-    console.log(renderToString(<App />));
+    // console.log(renderToString(<App />));
     // console.log(htmlContent);
+
+    // const links = document.querySelectorAll('link');
+    // console.log("Links ", links)
+    // // Iterate over the list and download each CSS file.
+    // for (let link of links) {
+    //   let run=async () => {
+    //     console.log("Download Link ", link);
+    //     if (link.rel === 'stylesheet') {
+    //       // Fetch the CSS file and save it to the local directory.
+    //       const response = await fetch(link.href);
+    //       console.log("Response ", response);
+    //       const cssText = await response.text();
+    //       console.log("CSS Text ",cssText);
+    //       const filename = link.href.split('/').pop();
+    //       console.log("File Name", filename);
+    //       const blob = new Blob([cssText], { type: 'text/css' });
+    //       console.log("Blob ",blob)
+    //       const url = URL.createObjectURL(blob);
+    //       const a = document.createElement('a');
+    //       a.href = url;
+    //       a.download = filename;
+    //       a.click();
+    //       URL.revokeObjectURL(url);
+    //     }
+    //   };
+    //   run();
+    // }
     downloadHtml(renderToString(<App />), "component.html");
   };
   return (
@@ -362,7 +406,25 @@ export default function HorizontalLinearStepper() {
                   <br />
                   {/* <ContextProvider> */}
                   {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
-                  <Template />
+                  {/* <Modal
+                  open={true}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  > */}
+                    <Box sx={{
+                      display:'flex',
+                      justifyContent: 'center',
+                      flexWrap: 'wrap',
+                      transform: 'translate(0%, 0%)',
+                      width: 800,
+                      bgcolor: 'background.paper',
+                      p: 4,
+                    }}>
+                      <Template />
+                    </Box>
+                  {/* </Modal> */}
+
+
                   {/* </ContextProvider> */}
                 </>) : (<></>)
             }
@@ -384,7 +446,7 @@ export default function HorizontalLinearStepper() {
               )} */}
               {
                 activeStep === steps.length - 1 ? (
-                  <Button className='stepButton' onClick={() => { handleFinish(); handleDownload(); }} sx={{ mr: 1, color: '#479ac2', background: 'white', boxShadow: '10px 10px 10px gray', fontWeight: '700' }}>
+                  <Button className='stepButton' onClick={() => { handleFinish(); }} sx={{ mr: 1, color: '#479ac2', background: 'white', boxShadow: '10px 10px 10px gray', fontWeight: '700' }}>
                     Download Portfolio
                   </Button>
                 ) : (
